@@ -2,47 +2,65 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private BoxCollider2D boxCollider;
-    private Vector3 moveDelta;
-    private RaycastHit2D hit;
-    private Animator animator;  // Animator reference
+    public float speed = 5f;
+    public float jumpHeight = 0.3f;   // Height of visual jump
+    public float jumpDuration = 0.3f; // Duration of jump animation
 
-    private void Start()
+    private Rigidbody2D rb;
+    private Animator animator;
+    private Vector2 moveInput;
+
+    private bool isJumping = false;
+    private Vector3 originalScale;
+
+    void Start()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-        animator = GetComponent<Animator>();  // Get the Animator component attached to this GameObject
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+        rb.gravityScale = 0;          // No gravity in top-down
+        rb.freezeRotation = true;     // Prevent rotation
     }
 
-    private void FixedUpdate()
+    void Update()
     {
-        // Get raw input values
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+        // Movement input
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        // Update animator parameters based on input:
-        // - 'isWalking' is true if either x or y is non-zero, otherwise false.
-        animator.SetFloat("Horizontal", x);
-        animator.SetFloat("Vertical", y);
-        animator.SetBool("isWalking", (x != 0 || y != 0));
+        // Update Animator parameters
+        animator.SetFloat("Horizontal", moveInput.x);
+        animator.SetFloat("Vertical", moveInput.y);
+        animator.SetBool("isWalking", moveInput != Vector2.zero);
 
-        // Reset moveDelta based on input
-        moveDelta = new Vector3(x, y, 0);
-
-        
-        // Check vertical movement using a BoxCast and move if possible
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y),
-                                  Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null)
+        // Jump input (visual only, no physics jump)
+        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
-            transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+            StartCoroutine(TopDownJump());
+        }
+    }
+
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
+    }
+
+    // Simple coroutine for top-down jump effect
+    private System.Collections.IEnumerator TopDownJump()
+    {
+        isJumping = true;
+
+        float timer = 0f;
+        Vector3 originalPosition = transform.localScale;
+
+        while (timer < jumpDuration)
+        {
+            float height = Mathf.Sin(Mathf.PI * (timer / jumpDuration)) * jumpHeight;
+            transform.localScale = new Vector3(1f + height, 1f + height, 1f);
+            timer += Time.deltaTime;
+            yield return null;
         }
 
-        // Check horizontal movement using a BoxCast and move if possible
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0),
-                                  Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null)
-        {
-            transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
-        }
+        transform.localScale = Vector3.one; // Reset to original scale
+        isJumping = false;
     }
 }
