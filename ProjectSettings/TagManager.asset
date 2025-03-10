@@ -44,14 +44,14 @@ TagManager:
   - name: Ground
     uniqueID: 1306942613
     locked: 0
-  - name: Actor
-    uniqueID: 1344205631
-    locked: 0
   - name: Wall
     uniqueID: 1632832481
     locked: 0
   - name: Interactable
     uniqueID: 2280813285
+    locked: 0
+  - name: Actor
+    uniqueID: 1344205631
     locked: 0
   m_RenderingLayers:
   - Default
