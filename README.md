@@ -3,9 +3,9 @@
 Welcome to Egg Hunt! A short game where you will find egg.
 
 Itch.io Assets Used:
-# Soundtrack: https://janhehr.itch.io/city-date?download
-# Sound Effects: https://jdwasabi.itch.io/8-bit-16-bit-sound-effects-pack
-# Art: https://cupnooble.itch.io/sprout-lands-asset-pack
+- Soundtrack: https://janhehr.itch.io/city-date?download
+- Sound Effects: https://jdwasabi.itch.io/8-bit-16-bit-sound-effects-pack
+- Art: https://cupnooble.itch.io/sprout-lands-asset-pack
 
 Photos: pngTree
 
