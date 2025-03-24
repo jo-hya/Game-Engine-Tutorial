@@ -9,8 +9,7 @@ public class playerJump : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.freezeRotation = true;  // prevents sideways flipping
-    }
+        rb.freezeRotation = true;
 
     void Update()
     {
@@ -44,4 +43,5 @@ public class playerJump : MonoBehaviour
             grounded = false;
         }
     }
+}
 }

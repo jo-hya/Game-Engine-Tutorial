@@ -3,8 +3,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 5f;
-    public float jumpHeight = 0.3f;   // Height of visual jump
-    public float jumpDuration = 0.3f; // Duration of jump animation
+    public float jumpHeight = 0.3f;
+    public float jumpDuration = 0.3f;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -24,15 +24,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Movement input
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        // Update Animator parameters
         animator.SetFloat("Horizontal", moveInput.x);
         animator.SetFloat("Vertical", moveInput.y);
         animator.SetBool("isWalking", moveInput != Vector2.zero);
 
-        // Jump input (visual only, no physics jump)
         if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
             StartCoroutine(TopDownJump());
@@ -44,7 +41,6 @@ public class Player : MonoBehaviour
         rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
     }
 
-    // Simple coroutine for top-down jump effect
     private System.Collections.IEnumerator TopDownJump()
     {
         isJumping = true;
@@ -60,7 +56,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
 
-        transform.localScale = Vector3.one; // Reset to original scale
+        transform.localScale = Vector3.one;
         isJumping = false;
     }
 }
