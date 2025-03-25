@@ -2,6 +2,11 @@
 
 Welcome to Egg Hunt! A short game where you will find egg.
 
+# How to play:
+- WASD / Arrow Keys for movement
+- Space to jump
+- Click to interact!
+
 Itch.io Assets Used:
 - Soundtrack: https://janhehr.itch.io/city-date?download
 - Sound Effects: https://jdwasabi.itch.io/8-bit-16-bit-sound-effects-pack
