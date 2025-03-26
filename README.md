@@ -5,7 +5,7 @@ Welcome to Egg Hunt! A short game where you will find egg.
 # How to Play:
 - WASD / Arrow Keys for movement
 - Space to jump
-- Click to interact!
+- Click to interact! Hint: Click on the Chicken to receive a quest!
 
 # Resources:
 Itch.io Assets Used:
